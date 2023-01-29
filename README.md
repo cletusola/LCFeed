@@ -3,4 +3,4 @@
 
 
 
-<h4>Deployment</h4> <p>in progress</p>
+<h4>Deployment</h4> <p>PythonAnywhere</p> .. <p> https://lcfeeds.pythonanywhere.com </p>
