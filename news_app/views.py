@@ -47,12 +47,17 @@ def getdata():
 def HomeView(request):
     today = date.today()
     feed = TodayFeed.objects.all().order_by('-time_fetched')[:1]
-    for f in feed:
-        if str(f.date_fetched) == str(today):
-            feeds = TodayFeed.objects.all().order_by('-time_fetched')[:70]   
-        else:
+    if feed.count() > 0:
+        for f in feed:
+            if str(f.date_fetched) == str(today):
+                feeds = TodayFeed.objects.all().order_by('-time_fetched')[:70]   
+            else:
+                getdata()
+    else:
+        try:
             getdata()
-
+        except:
+            return HttpResponse("Unable to fetch feeds from source, API error please try again later.")
     return render(request,'home.html',{'feeds':feeds})
 
 
