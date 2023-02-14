@@ -3,44 +3,57 @@ from django.http import HttpResponse
 from .models import TodayFeed
 from django.contrib.auth.decorators import login_required 
 
-
+from datetime import date
 import requests
 import json
-import time
 
 
-#news refresh view(can only be accessed by an auth user
-@login_required
-def getData(request):
+# function to fetch news feeds 
+def getdata():
 
     url = "https://daily-mail-feed.p.rapidapi.com/api/news/daily-mail/%7Bcategory%7D"
-
     headers = {
         "X-RapidAPI-Key": "8211bedd48mshaeec0f8548aac97p1c9a0djsn0a939a85759c",
         "X-RapidAPI-Host": "daily-mail-feed.p.rapidapi.com"
     }
 
-    try:
-        response = requests.request("GET", url, headers=headers)
+    response = requests.request("GET", url, headers=headers)
 
-        data = json.loads(response.text)
+    data = json.loads(response.text)
 
-        for i in range(74):
-            title = data[i]['title']
-            description = data[i]['description']
-            url = data[i]['url']
-            date = data[i]['date']
+    for i in range(72):
+        title = data[i]['title']
+        description = data[i]['description']
+        url = data[i]['url']
+        date = data[i]['date']
 
-            feed = TodayFeed.objects.create(
-                title=title,description=description,url=url,date=date
-            )
-            feed.save()
-    except:
-        data = "Unable to fetch headlines"
+        feed = TodayFeed.objects.create(
+            title=title,description=description,url=url,date=date
+        )
+        feed.save()
+        feeds = TodayFeed.objects.all().order_by('-time_fetched')[:70]
+        if feeds:
+            try:
+                older_feed = TodayFeed.objects.all().order_by('time_fetched')[:70]
+                older_feed.delete()
+            except:
+                pass
+        else:
+            pass 
 
-    return HttpResponse("fetched")
+    return feeds
 
-
+# home view 
 def HomeView(request):
-    feeds = TodayFeed.objects.all().order_by('-time_fetched')[:74]
+    today = date.today()
+    feed = TodayFeed.objects.all().order_by('-time_fetched')[:1]
+    for f in feed:
+        if str(f.date_fetched) == str(today):
+            feeds = TodayFeed.objects.all().order_by('-time_fetched')[:70]   
+        else:
+            getdata()
+
     return render(request,'home.html',{'feeds':feeds})
+
+
+    

@@ -1,5 +1,5 @@
 body{
-    background-color: whitesmoke;
+    background-color: rgb(20, 20, 20);
 }
 
 .top{
@@ -9,7 +9,7 @@ body{
 }
 .top h3{
     font-size: 35px;
-    color: rgb(41, 42, 43);
+    color: white;
 }
 
 .feed-div{
@@ -18,10 +18,17 @@ body{
     width: 97%;
     padding: 10px;
     word-break: break-all;
-    background-color: rgb(243, 240, 236);
+    /* text-align: center; */
+    /* background-color: rgb(17, 17, 17); */
     border-radius: 5px;
+    color: rgb(255, 255, 255);
 }
 
+.feed-div p{
+    word-wrap: break-word;
+    word-spacing: 1px;
+    padding: 5px;
+}
 .feed-div h3{
     font-size: 19px;
 }
