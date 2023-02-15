@@ -41,10 +41,11 @@ def getdata():
         else:
             pass 
 
-    return feeds
+    return None
 
 # home view 
 def HomeView(request):
+    feeds = None
     today = date.today()
     feed = TodayFeed.objects.all().order_by('-time_fetched')[:1]
     if feed.count() > 0:
@@ -53,9 +54,11 @@ def HomeView(request):
                 feeds = TodayFeed.objects.all().order_by('-time_fetched')[:70]   
             else:
                 getdata()
+                feeds = TodayFeed.objects.all().order_by('-time_fetched')[:70] 
     else:
         try:
             getdata()
+            feeds = TodayFeed.objects.all().order_by('-time_fetched')[:70] 
         except:
             return HttpResponse("Unable to fetch feeds from source, API error please try again later.")
     return render(request,'home.html',{'feeds':feeds})
