@@ -6,14 +6,18 @@ from django.contrib.auth.decorators import login_required
 from datetime import date
 import requests
 import json
+import os  
+from dotenv import load_dotenv
 
+
+load_dotenv('../.env')
 
 # function to fetch news feeds 
 def getdata():
 
     url = "https://daily-mail-feed.p.rapidapi.com/api/news/daily-mail/%7Bcategory%7D"
     headers = {
-        "X-RapidAPI-Key": "8211bedd48mshaeec0f8548aac97p1c9a0djsn0a939a85759c",
+        "X-RapidAPI-Key": os.getenv('API_KEY'),
         "X-RapidAPI-Host": "daily-mail-feed.p.rapidapi.com"
     }
 
