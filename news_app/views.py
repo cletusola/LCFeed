@@ -38,7 +38,7 @@ def getdata():
         feeds = TodayFeed.objects.all().order_by('-time_fetched')[:70]
         if feeds:
             try:
-                older_feed = TodayFeed.objects.all().order_by('time_fetched')[:70]
+                older_feed = TodayFeed.objects.all().order_by('time_fetched')[:73]
                 older_feed.delete()
             except:
                 pass
