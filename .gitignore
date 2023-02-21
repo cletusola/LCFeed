@@ -1,0 +1,33 @@
+#django 
+
+*.log
+*.pot
+*.pyc
+__pycache__
+db.sqlite3
+
+
+# Unit test / coverage reports 
+htmlcov/ 
+.tox/ 
+.coverage 
+.coverage.* 
+.cache 
+.pytest_cache/ 
+nosetests.xml 
+coverage.xml 
+*.cover 
+.hypothesis/ 
+
+#folders and files 
+.env 
+/env
+*.sqlite3
+/news/__pycache__
+/news/__init__.py
+
+/news_app/__pycache__
+/news_app/migrations 
+/news_app/__init__.py 
+
+
